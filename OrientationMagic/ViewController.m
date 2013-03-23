@@ -87,7 +87,7 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void) orientationChanged:(NSNotification *)note
+- (void)orientationChanged:(NSNotification *)note
 {
     UIDevice * device = note.object;
     UIInterfaceOrientation toOrientation = self.interfaceOrientation;
@@ -119,6 +119,7 @@
 {
     [self addChildViewController:content];
     [self.view addSubview:content.view];
+	content.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
     [content didMoveToParentViewController:self];
 }
 
@@ -188,24 +189,29 @@
     CGFloat newWidth = deviceWidth;
     CGFloat newHeight = deviceHeight;
 	
+	NSLog(@"Status Bar Frame: %@", NSStringFromCGRect([[UIApplication sharedApplication] statusBarFrame]));
+	
     switch (orientation) {
         case UIInterfaceOrientationPortrait:
             angle = 0.0f;
+			newY = 20.0f;
             newWidth = deviceWidth;
-            newHeight = deviceHeight;
+            newHeight = deviceHeight - 20.0f;
             break;
         case UIInterfaceOrientationLandscapeRight:
-            angle = M_PI / 2;
-			newX = (-1 * deviceWidth) + 50.0f;
+			// FIX MAGIC NUMBERS HERE
+            angle = M_PI_2;
+			newX = (-1 * deviceWidth) + 20.0f;
             newWidth = deviceHeight;
-            newHeight = deviceWidth;
+            newHeight = deviceWidth - 20.0f;
             break;
         case UIInterfaceOrientationLandscapeLeft:
-            angle = -1 * M_PI / 2;
+			// FIX MAGIC NUMBERS HERE
+            angle = -1 * M_PI_2;
 			newX = 20.0f;
-			newY = (deviceHeight / 2) - 40.0f;
+			newY = (deviceHeight / 2) - 20.0f;
             newWidth = deviceHeight;
-            newHeight = deviceWidth;
+            newHeight = deviceWidth - 20.0f;
             break;
         case UIDeviceOrientationPortraitUpsideDown:
         default:
