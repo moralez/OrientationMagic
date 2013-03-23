@@ -173,15 +173,16 @@
 }
 
 - (void)forceRotation:(UIInterfaceOrientation)orientation {
-    NSLog(@"Forcing Rotation");
-    
     UIWindow *_window = [[[UIApplication sharedApplication] delegate] window];
     CGFloat deviceWidth =  [[_window screen] bounds].size.width;
     CGFloat deviceHeight = [[_window screen] bounds].size.height;
     
     CGFloat angle = 0.0f;
+	CGFloat newX = 0.0f;
+	CGFloat newY = 0.0f;
     CGFloat newWidth = deviceWidth;
     CGFloat newHeight = deviceHeight;
+	
     switch (orientation) {
         case UIInterfaceOrientationPortrait:
             angle = 0.0f;
@@ -190,11 +191,13 @@
             break;
         case UIInterfaceOrientationLandscapeRight:
             angle = M_PI / 2;
+			newY = -1 * deviceHeight / 2;
             newWidth = deviceHeight;
             newHeight = deviceWidth;
             break;
         case UIInterfaceOrientationLandscapeLeft:
-            angle = - M_PI / 2;
+            angle = -1 * M_PI / 2;
+			newY = deviceHeight / 2;
             newWidth = deviceHeight;
             newHeight = deviceWidth;
             break;
@@ -203,10 +206,14 @@
             // Do Nothing
             return;
     }
+	
+	CGRect newFrame = CGRectMake(newX, newY, newWidth, newHeight);
+	
+	NSLog(@"Forcing Rotation, Angle: %f, Frame: %@", angle, NSStringFromCGRect(newFrame));
     
     [UIView animateWithDuration:0.25 animations:^{
         [self.view setTransform:CGAffineTransformMakeRotation(angle)];
-        [self.view setFrame:CGRectMake(0, 0, newWidth, newHeight)];
+        [self.view setFrame:newFrame];
         [[UIApplication sharedApplication] setStatusBarOrientation:orientation animated:YES];
     }];
 }
