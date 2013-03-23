@@ -43,11 +43,13 @@
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
-    UIInterfaceOrientationMask supportedOrientations = UIInterfaceOrientationMaskPortrait;
-    if (self.splitViewMode) {
-        return UIInterfaceOrientationMaskLandscape;
-    }
-    return supportedOrientations;
+//    UIInterfaceOrientationMask supportedOrientations = UIInterfaceOrientationMaskPortrait;
+//    if (self.splitViewMode) {
+//        return UIInterfaceOrientationMaskLandscape;
+//    }
+//    return supportedOrientations;
+	
+	return 0;
 }
 
 - (void)viewDidLoad
@@ -93,19 +95,22 @@
     switch(device.orientation)
     {
         case UIDeviceOrientationPortrait:
+			NSLog(@"Orientation Changed to Portrait");
             toOrientation = UIInterfaceOrientationPortrait;
             break;
-        case UIDeviceOrientationPortraitUpsideDown:
-            return;
         case UIDeviceOrientationLandscapeLeft:
+			NSLog(@"Orientation Changed to Landscape Right");
             toOrientation = UIInterfaceOrientationLandscapeRight;
             break;
         case UIDeviceOrientationLandscapeRight:
+			NSLog(@"Orientation Changed to Landscape Left");
             toOrientation = UIInterfaceOrientationLandscapeLeft;
             break;
         default:
             return;
     };
+	
+	[self forceRotation:toOrientation];
     
     [self setSplitViewMode:UIInterfaceOrientationIsLandscape(toOrientation)];
 }
@@ -191,13 +196,14 @@
             break;
         case UIInterfaceOrientationLandscapeRight:
             angle = M_PI / 2;
-			newY = -1 * deviceHeight / 2;
+			newX = (-1 * deviceWidth) + 50.0f;
             newWidth = deviceHeight;
             newHeight = deviceWidth;
             break;
         case UIInterfaceOrientationLandscapeLeft:
             angle = -1 * M_PI / 2;
-			newY = deviceHeight / 2;
+			newX = 20.0f;
+			newY = (deviceHeight / 2) - 40.0f;
             newWidth = deviceHeight;
             newHeight = deviceWidth;
             break;
@@ -209,6 +215,7 @@
 	
 	CGRect newFrame = CGRectMake(newX, newY, newWidth, newHeight);
 	
+	NSLog(@"Starting Rotation, Angle: %f, Frame: %@", atan2(self.view.transform.b, self.view.transform.a), NSStringFromCGRect(self.view.frame));
 	NSLog(@"Forcing Rotation, Angle: %f, Frame: %@", angle, NSStringFromCGRect(newFrame));
     
     [UIView animateWithDuration:0.25 animations:^{
