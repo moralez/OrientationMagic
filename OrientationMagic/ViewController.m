@@ -201,7 +201,8 @@
         case UIInterfaceOrientationLandscapeRight:
 			// FIX MAGIC NUMBERS HERE
             angle = M_PI_2;
-			newX = (-1 * deviceWidth) + 20.0f;
+//			newX = (-1 * deviceWidth) + 140.0f; // 3.5" Screen
+			newX = (-1 * deviceWidth) + 52.0f; // 4" Screen
             newWidth = deviceHeight;
             newHeight = deviceWidth - 20.0f;
             break;
@@ -209,7 +210,8 @@
 			// FIX MAGIC NUMBERS HERE
             angle = -1 * M_PI_2;
 			newX = 20.0f;
-			newY = (deviceHeight / 2) - 20.0f;
+//			newY = (deviceHeight / 2) - 60.0f; // 3.5" Screen
+			newY = (deviceHeight / 2) - 16.0f; // 4" Screen
             newWidth = deviceHeight;
             newHeight = deviceWidth - 20.0f;
             break;
