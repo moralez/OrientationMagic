@@ -203,16 +203,14 @@
             break;
         case UIInterfaceOrientationLandscapeRight:
             angle = M_PI_2;
-//			newX = (-1 * deviceWidth) + 140.0f; // 3.5" Screen
-			newX = (-1 * deviceWidth) + 52.0f; // 4" Screen
+			newX = deviceWidth - deviceHeight - 20.0f;
             newWidth = deviceHeight;
             newHeight = deviceWidth - 20.0f;
             break;
         case UIInterfaceOrientationLandscapeLeft:
             angle = -1 * M_PI_2;
 			newX = 20.0f;
-//			newY = (deviceHeight / 2) - 60.0f; // 3.5" Screen
-			newY = (deviceHeight / 2) - 16.0f; // 4" Screen
+			newY = deviceHeight - deviceWidth + 20.0f;
             newWidth = deviceHeight;
             newHeight = deviceWidth - 20.0f;
             break;
