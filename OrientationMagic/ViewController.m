@@ -121,6 +121,8 @@
     [self.view addSubview:content.view];
 	content.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
     [content didMoveToParentViewController:self];
+	
+	NSLog(@"Frame: %@", NSStringFromCGRect(content.view.frame));
 }
 
 - (void)hideContentController:(UIViewController<ViewControllerProtocol>*)content {
@@ -143,11 +145,11 @@
 
 - (void)cycleFromViewController:(UIViewController<ViewControllerProtocol>*)content {
     if ([content isKindOfClass:[PortraitViewController class]]) {
-        [self setSplitViewMode:YES];
         [self forceRotation:UIInterfaceOrientationLandscapeLeft];
+		[self setSplitViewMode:YES];
     } else if ([content isKindOfClass:[LandscapeViewController class]]) {
-        [self setSplitViewMode:NO];
         [self forceRotation:UIInterfaceOrientationPortrait];
+		[self setSplitViewMode:NO];
     }
 }
 
@@ -155,6 +157,7 @@
     UIWindow *_window = [[[UIApplication sharedApplication] delegate] window];
     CGFloat deviceWidth =  [[_window screen] bounds].size.width;
     CGFloat deviceHeight = [[_window screen] bounds].size.height;
+	
     CGRect frame = self.view.frame;
     frame.origin.x = 0;
     frame.origin.y = 0;
@@ -199,7 +202,6 @@
             newHeight = deviceHeight - 20.0f;
             break;
         case UIInterfaceOrientationLandscapeRight:
-			// FIX MAGIC NUMBERS HERE
             angle = M_PI_2;
 //			newX = (-1 * deviceWidth) + 140.0f; // 3.5" Screen
 			newX = (-1 * deviceWidth) + 52.0f; // 4" Screen
@@ -207,7 +209,6 @@
             newHeight = deviceWidth - 20.0f;
             break;
         case UIInterfaceOrientationLandscapeLeft:
-			// FIX MAGIC NUMBERS HERE
             angle = -1 * M_PI_2;
 			newX = 20.0f;
 //			newY = (deviceHeight / 2) - 60.0f; // 3.5" Screen
